@@ -1,8 +1,8 @@
-tqdm
-dvc
+tqdm>=4.64.1
+dvc>=2.50.0
 dvc[gs]
 pymongo[srv]==4.2.0
-pandas
+pycaret==3.0.0rc9
 numpy
 PyYAML
 scikit-learn
@@ -10,10 +10,9 @@ python-dotenv
 cryptography
 mlflow
 boto3
-pytest==7.2.2
+pytest>=7.2.2
 #tox
 #flake8
 gcpx
-pycaret==3.0.0rc9
-evidently
+evidently>=0.2.6
 -e .
