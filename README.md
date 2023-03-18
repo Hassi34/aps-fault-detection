@@ -159,7 +159,6 @@ EMAIL_RECIPIENTS=""
 Start Training and Serving Pipeline<a id='run-pipeline'></a>
 
 ```bash
-  dvc init 
   dvc repro
 ```
 ## Conclusion<a id='conclusion-'></a>
