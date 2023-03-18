@@ -163,7 +163,7 @@ Start Training and Serving Pipeline<a id='run-pipeline'></a>
   dvc repro
 ```
 ## Conclusion<a id='conclusion-'></a>
-This project is production ready to use the similar use cases and it will provide the automated and orchesrated production ready pipelines(Training & Serving)
+This project is production ready to be used for the similar use cases and it will provide the automated and orchesrated production ready pipelines(Training & Serving)
 #### **Thank you for visiting 🙏 If you find this project useful then don't forget to star the repo ✨⭐🤖**<br><br>
 
 #### **📃 License**
