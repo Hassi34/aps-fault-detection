@@ -1,7 +1,0 @@
-{
-    "accuracy": 0.983,
-    "precision": 0.974,
-    "recall": 0.974,
-    "f1_score": 0.974,
-    "cost": 510
-}

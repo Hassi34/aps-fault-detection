@@ -1,5 +1,0 @@
-[core]
-    remote = dvc_remote_sensor_fault
-['remote "dvc_remote_sensor_fault"']
-    url = gs://mlops-378116/sensors_fault/dvc_data
-    version_aware = true

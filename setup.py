@@ -1,20 +1,13 @@
-from setuptools import setup, find_packages
+from setuptools import setup,find_packages
 from typing import List
 
-with open("README.md", "r", encoding="utf-8") as f:
-    long_description = f.read()
+#Declaring variables for setup functions
+PROJECT_NAME="Streaming Data pipeline"
+VERSION="0.0.3"
+AUTHOR="Hasanain"
+DESRCIPTION="This project contains the realtime streaming pipline using Kafka"
 
-# Declaring variables for setup functions
-PROJECT_NAME = "src"
-VERSION = "0.0.2"
-AUTHOR = "Hasanain"
-USER_NAME = "hassi34"
-AUTHOR_EMAIL = "hasanain@aicaliber.com"
-REPO_NAME = "aps-fault-detection"
-DESRCIPTION = "This project contains the production ready Machine Learning solution to make the prediction on the batch of data coming from Air Pressure system (APS) sensors"
-REQUIREMENT_FILE_NAME = "requirements.txt"
-LICENSE = "MIT"
-PYTHON_REQUIRES = ">=3.7"
+REQUIREMENT_FILE_NAME="requirements.txt"
 
 HYPHEN_E_DOT = "-e ."
 
@@ -34,15 +27,12 @@ def get_requirements_list() -> List[str]:
         return requirement_list
 
 
+
 setup(
-    name=PROJECT_NAME,
-    version=VERSION,
-    author=AUTHOR,
-    description=DESRCIPTION,
-    long_description=long_description,
-    url=f"https://github.com/{USER_NAME}/{REPO_NAME}",
-    packages=find_packages(),
-    license=LICENSE,
-    python_requires=PYTHON_REQUIRES,
-    install_requires=get_requirements_list()
+name=PROJECT_NAME,
+version=VERSION,
+author=AUTHOR,
+description=DESRCIPTION,
+packages=find_packages(), 
+install_requires=get_requirements_list()
 )
