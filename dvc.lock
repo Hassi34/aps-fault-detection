@@ -1,0 +1,210 @@
+schema: '2.0'
+stages:
+  downloadData:
+    cmd: python src/stage_01_download_data.py --config=configs/config.yaml
+    deps:
+    - path: configs/config.yaml
+      md5: 5e747373efdd8b4873b4e428f00c7445
+      size: 789
+    - path: src/stage_01_download_data.py
+      md5: 4f272aef11ae4832e698fdfbc1cb32e6
+      size: 1542
+    outs:
+    - path: data/raw/winequality.csv
+      md5: ccc8d3507eb151f53f760d36abdef888
+      size: 91998
+      cloud:
+        myremote:
+          etag: 08d8cbc7c5f0b9fd021001
+          version_id: '1677644436465112'
+  preprocessData:
+    cmd: python src/stage_02_preprocess_data.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: data/raw/winequality.csv
+      md5: ccc8d3507eb151f53f760d36abdef888
+      size: 91998
+    - path: params.yaml
+      md5: 660ec3e6d0e12b9c5c15a6b9778b06be
+      size: 214
+    - path: src/stage_02_preprocess_data.py
+      md5: 2ce67bc637fade268554e6aa896d55cb
+      size: 2189
+    outs:
+    - path: data/preprocessed/test.csv
+      md5: 74503381ebcd00f6a3a54f06055d6fe2
+      size: 18873
+      cloud:
+        myremote:
+          etag: 08ead283ef85bafd021001
+          version_id: '1677650160576874'
+    - path: data/preprocessed/train.csv
+      md5: d2ebcfa62dff59b8db2f2796343e0163
+      size: 74871
+      cloud:
+        myremote:
+          etag: 0897c7acef85bafd021001
+          version_id: '1677650161247127'
+  DownloadData:
+    cmd: python src/stage_01_download_data.py --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: params.yaml
+      md5: 63a3f01262e5bfcd05a248a194c7fc68
+      size: 282
+    - path: src/stage_01_download_data.py
+      md5: 10e0696685e2f6e0daf7f164c14ef08c
+      size: 2696
+    outs:
+    - path: data/raw/sensors.csv
+      md5: 41cd3ad62670a938d05373078857b52d
+      size: 308421
+  PreprocessData:
+    cmd: python src/stage_02_preprocess_data.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: data/raw/sensors.csv
+      md5: 41cd3ad62670a938d05373078857b52d
+      size: 308421
+    - path: params.yaml
+      md5: 63a3f01262e5bfcd05a248a194c7fc68
+      size: 282
+    - path: src/stage_02_preprocess_data.py
+      md5: 0bdebbf99af12f72d4ce1b881e56142b
+      size: 2151
+    outs:
+    - path: data/preprocessed/test.csv
+      md5: 29e1f2a23ede0da3cdc7595dcb049859
+      size: 125248
+    - path: data/preprocessed/train.csv
+      md5: 9981bb4366e6cfe850f8559a95563c15
+      size: 301005
+  TrainAndEvalute:
+    cmd: python src/stage_03_train_evaluate.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: data/preprocessed/test.csv
+      md5: 29e1f2a23ede0da3cdc7595dcb049859
+      size: 125248
+    - path: data/preprocessed/train.csv
+      md5: 9981bb4366e6cfe850f8559a95563c15
+      size: 301005
+    - path: params.yaml
+      md5: 63a3f01262e5bfcd05a248a194c7fc68
+      size: 282
+    - path: src/stage_03_train_evaluate.py
+      md5: 4bcdcaa5b3e45a6644ef592504833dbb
+      size: 7192
+    outs:
+    - path: artifacts/prediction_schema/schema.json
+      md5: eeb336c060ddae954012b80b7ce7c2fb
+      size: 6274
+    - path: artifacts/reports/params.json
+      md5: 0bba83a916de039623598084dc0f81b4
+      size: 57
+    - path: artifacts/reports/scores.json
+      md5: 4117b362984845568c98a322892cb77e
+      size: 115
+    - path: artifacts/trained_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326
+  ModelBlessing:
+    cmd: python src/stage_05_model_blessing.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/reports/preblessing_tests.xml
+      md5: 05e14be3b60f26da1ee46214e130b112
+      size: 338
+    - path: artifacts/trained_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: data/preprocessed/test.csv
+      md5: 29e1f2a23ede0da3cdc7595dcb049859
+      size: 125248
+    - path: src/stage_05_model_blessing.py
+      md5: 4135ade22177d41b25a266bf3e060bca
+      size: 3184
+    outs:
+    - path: artifacts/blessed_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326
+  PreBlessingTests:
+    cmd: pytest tests/test_preblessing.py --junitxml=artifacts/reports/preblessing_tests.xml
+    deps:
+    - path: artifacts/prediction_schema/schema.json
+      md5: be925beebfa7baa29290461cf5fe4b51
+      size: 426
+    - path: artifacts/trained_model/model.joblib
+      md5: 47db0e0a3db459346855d009ba737bbb
+      size: 6743747
+    - path: configs/config.yaml
+      md5: 86ad41000b5eff0e035c21b27c93990b
+      size: 2352
+    - path: params.yaml
+      md5: 976343d035e0dba53d67875f227d5005
+      size: 372
+    - path: tests/test_preblessing.py
+      md5: 5a8b21e3a9c76cf48249ada189fe1c0c
+      size: 3838
+    outs:
+    - path: artifacts/reports/preblessing_tests.xml
+      md5: 89056b28429e75b32f13efa7c5883f54
+      size: 551
+      cloud:
+        myremote:
+          etag: 08eba8a89efdd6fd021001
+          version_id: '1678644276237419'
+  PreProdSetup:
+    cmd: "python src/stage_04_preprod_setup.py\npytest tests/test_preblessing.py --junitxml=artifacts/reports/preblessing_tests.xml\n"
+    deps:
+    - path: artifacts/prediction_schema/schema.json
+      md5: eeb336c060ddae954012b80b7ce7c2fb
+      size: 6274
+    - path: artifacts/trained_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: params.yaml
+      md5: 63a3f01262e5bfcd05a248a194c7fc68
+      size: 282
+    - path: src/stage_04_preprod_setup.py
+      md5: a443b09c9ca46d78d8c37f8794837671
+      size: 1051
+    - path: tests/test_preblessing.py
+      md5: d6a147f2c677d648f70c5ddf20f56d6e
+      size: 1864
+    outs:
+    - path: artifacts/reports/preblessing_tests.xml
+      md5: 05e14be3b60f26da1ee46214e130b112
+      size: 338
+  Production:
+    cmd: python src/stage_06_production_service.py  --config=configs/config.yaml
+    deps:
+    - path: artifacts/blessed_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326
+    - path: configs/config.yaml
+      md5: 588280486193fafc18407a15d6e6bc06
+      size: 2369
+    - path: data/preprocessed/test.csv
+      md5: 29e1f2a23ede0da3cdc7595dcb049859
+      size: 125248
+    - path: src/stage_06_production_service.py
+      md5: bccf9c41d4a7abbd9964ba5ad7eddfb0
+      size: 2433
+    outs:
+    - path: model_serving/data/predictions.csv
+      md5: 5438d7fc9c1c65b9e34623711ee14ca4
+      size: 313938
+    - path: model_serving/production_model/model.joblib
+      md5: 9186d38d3a5188ff2b66b6f2adacfdf8
+      size: 452326

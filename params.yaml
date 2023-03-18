@@ -1,0 +1,15 @@
+# This contains params to be used by the stages to train or predict
+
+base:
+  RANDOM_STATE: 42
+
+split_data:
+  TRAIN_SIZE: 0.7
+
+prediction:
+  MIN_EXPECTED_PRED_VALUE : 0 
+  MAX_EXPECTED_PRED_VALUE : 1
+
+model_monitoring:
+  CHECK_DATA_DRIFT : False
+  COST_THRESHOLD: 100

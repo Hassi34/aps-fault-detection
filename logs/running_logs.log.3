@@ -1,0 +1,95 @@
+[2023-03-17 09:39:35,006 - INFO - root - stage_03_train_evaluate - 86] : Uploaded the schema to cloud
+[2023-03-17 09:39:35,010 - INFO - root - stage_03_train_evaluate - 88] : AutoML experiment started...
+[2023-03-17 09:41:18,327 - INFO - root - stage_03_train_evaluate - 112] : Created the prediction pipeline with the best model
+[2023-03-17 09:41:19,670 - INFO - root - stage_03_train_evaluate - 116] : Model training started with experiment name : "automlExp" and run name :"local-20230317093934"
+[2023-03-17 09:41:21,168 - INFO - root - stage_03_train_evaluate - 118] : Model training completed!
+[2023-03-17 09:41:21,579 - INFO - root - stage_03_train_evaluate - 129] : Experiment logging completed with Parameter :
+ {'boosting_type': 'gbdt', 'class_weight': 'None', 'colsample_bytree': '1.0', 'importance_type': 'split', 'learning_rate': '0.1', 'max_depth': '-1', 'min_child_samples': '20', 'min_child_weight': '0.001', 'min_split_gain': '0.0', 'n_estimators': '100', 'n_jobs': '-1', 'num_leaves': '31', 'objective': 'None', 'random_state': '1146', 'reg_alpha': '0.0', 'reg_lambda': '0.0', 'silent': 'warn', 'subsample': '1.0', 'subsample_for_bin': '200000', 'subsample_freq': '0', 'device': 'gpu'}
+[2023-03-17 09:41:21,580 - INFO - root - stage_03_train_evaluate - 130] : Training params saved at : artifacts/reports/params.json
+[2023-03-17 09:41:21,581 - INFO - root - stage_03_train_evaluate - 131] : Model Eval result : accuracy: 0.96 precision: 0.907 recall: 0.932 f1_score : 0.932 cost : 2570
+[2023-03-17 09:41:21,602 - INFO - root - stage_03_train_evaluate - 135] : Trained model saved at : artifacts/trained_model\model.joblib
+[2023-03-17 09:41:22,631 - INFO - root - stage_03_train_evaluate - 137] : Uploaded the trained model to cloud storage
+[2023-03-17 09:41:33,552 - INFO - root - stage_03_train_evaluate - 153] : Model Scores saved at : artifacts/reports/scores.json
+[2023-03-17 09:41:33,556 - INFO - root - stage_03_train_evaluate - 168] : >>>>> stage "Training and Evaluation" completed!<<<<<
+
+[2023-03-17 09:41:41,181 - INFO - root - stage_04_preprod_setup - 38] : 
+********************
+[2023-03-17 09:41:41,181 - INFO - root - stage_04_preprod_setup - 39] : >>>>> stage "Pre-production Setup" started <<<<<
+[2023-03-17 09:41:42,645 - INFO - root - stage_04_preprod_setup - 29] : Downloaded the blessed model from the Cloud Storage
+[2023-03-17 09:41:42,645 - INFO - root - stage_04_preprod_setup - 41] : >>>>> stage "Pre-production Setup" completed!<<<<<
+
+[2023-03-17 09:41:51,667 - INFO - root - tests_preblessing - 30] : >>>>> stage "Pre-blessing Tests" started <<<<<
+[2023-03-17 09:41:51,674 - INFO - root - tests_preblessing - 57] : >>>>> stage "Pre-blessing Tests" completed!<<<<<
+
+[2023-03-17 09:42:00,756 - INFO - root - stage_05_model_blessing - 90] : 
+********************
+[2023-03-17 09:42:00,756 - INFO - root - stage_05_model_blessing - 91] : >>>>> stage "Model Blessing" started <<<<<
+[2023-03-17 09:42:00,763 - INFO - root - stage_05_model_blessing - 49] : 1 preblessing tests passed without any failures and errors, proceeding with blessing the model
+[2023-03-17 09:42:01,719 - INFO - root - ml - 38] : Total cost with trained model: 2570, Total cost with production model: 2070
+[2023-03-17 09:42:01,720 - INFO - root - stage_05_model_blessing - 67] : Current model is not better than the production model, terminating the pipeline...
+[2023-03-17 09:42:02,319 - INFO - root - stage_05_model_blessing - 72] : All validations passed, Model has been blessed
+[2023-03-17 09:42:02,322 - INFO - root - stage_05_model_blessing - 74] : blessed model is available at artifacts/blessed_model/model.joblib
+[2023-03-17 09:42:03,204 - INFO - root - stage_05_model_blessing - 78] : Model latest version 6 has been transitioned to MLFlow Production
+[2023-03-17 09:42:04,346 - INFO - root - stage_05_model_blessing - 81] : Uploaded the blessed model to Cloud Storage
+[2023-03-17 09:42:04,347 - INFO - root - stage_05_model_blessing - 93] : >>>>> stage "Model Blessing" completed!<<<<<
+
+[2023-03-17 09:42:10,591 - INFO - root - stage_06_production_service - 60] : 
+********************
+[2023-03-17 09:42:10,591 - INFO - root - stage_06_production_service - 61] : >>>>> stage "Production Serving" started <<<<<
+[2023-03-17 09:42:12,009 - INFO - root - stage_06_production_service - 34] : Downloaded the blessed model to artifacts/blessed_model/model.joblib
+[2023-03-17 09:42:12,017 - INFO - root - stage_06_production_service - 36] : Blessed model copied to model_serving/production_model/model.joblib
+[2023-03-17 09:42:14,350 - INFO - root - stage_06_production_service - 43] : Inputs dataframe with the shape : (300, 170)
+[2023-03-17 09:42:15,255 - INFO - root - stage_06_production_service - 51] : Predictions have been saved at: model_serving/data/predictions.csv, having the shape: (300, 171)
+[2023-03-17 09:42:17,465 - INFO - root - stage_06_production_service - 63] : >>>>> stage "Production Serving" completed!<<<<<
+
+[2023-03-17 09:57:31,545 - INFO - root - object_storage - 25] : >>>>> stage "Pre-blessing Tests" started <<<<<
+[2023-03-17 09:57:33,062 - INFO - root - stage_01_download_data - 62] : 
+********************
+[2023-03-17 09:57:33,062 - INFO - root - stage_01_download_data - 63] : >>>>> stage "Load Data" started <<<<<
+[2023-03-17 09:57:42,920 - INFO - root - stage_01_download_data - 39] : Downloaded the data from MongoDB and saved at data/raw/sensors.csv
+[2023-03-17 09:57:42,940 - INFO - root - stage_01_download_data - 52] : 'Check Data Drift' has been set to False, skipping data drift...
+[2023-03-17 09:57:42,940 - INFO - root - stage_01_download_data - 65] : >>>>> stage "Load Data" completed!<<<<<
+
+[2023-03-17 09:58:29,306 - INFO - root - object_storage - 25] : >>>>> stage "Pre-blessing Tests" started <<<<<
+[2023-03-17 09:58:30,727 - INFO - root - stage_01_download_data - 62] : 
+********************
+[2023-03-17 09:58:30,727 - INFO - root - stage_01_download_data - 63] : >>>>> stage "Load Data" started <<<<<
+[2023-03-17 09:58:39,917 - INFO - root - stage_01_download_data - 39] : Downloaded the data from MongoDB and saved at data/raw/sensors.csv
+[2023-03-17 09:58:54,715 - INFO - root - validation - 50] : 0/171 drift detected.
+[2023-03-17 09:58:55,905 - INFO - root - stage_01_download_data - 45] : Drift report has been uploaded to GCS
+[2023-03-17 09:58:55,905 - INFO - root - stage_01_download_data - 47] : No data drift detected, terminating the experiment...
+[2023-03-17 09:59:39,497 - INFO - root - object_storage - 25] : >>>>> stage "Pre-blessing Tests" started <<<<<
+[2023-03-17 09:59:40,890 - INFO - root - stage_01_download_data - 62] : 
+********************
+[2023-03-17 09:59:40,891 - INFO - root - stage_01_download_data - 63] : >>>>> stage "Load Data" started <<<<<
+[2023-03-17 09:59:50,644 - INFO - root - stage_01_download_data - 39] : Downloaded the data from MongoDB and saved at data/raw/sensors.csv
+[2023-03-17 10:00:06,024 - INFO - root - validation - 50] : 0/171 drift detected.
+[2023-03-17 10:00:07,240 - INFO - root - stage_01_download_data - 45] : Drift report has been uploaded to GCS
+[2023-03-17 10:00:07,240 - INFO - root - stage_01_download_data - 47] : No data drift detected, terminating the experiment...
+[2023-03-17 13:33:25,435 - INFO - root - object_storage - 25] : >>>>> stage "Pre-blessing Tests" started <<<<<
+[2023-03-17 13:33:27,010 - INFO - root - stage_01_download_data - 62] : 
+********************
+[2023-03-17 13:33:27,014 - INFO - root - stage_01_download_data - 63] : >>>>> stage "Load Data" started <<<<<
+[2023-03-17 13:33:37,584 - INFO - root - stage_01_download_data - 39] : Downloaded the data from MongoDB and saved at data/raw/sensors.csv
+[2023-03-17 13:33:44,672 - INFO - root - validation - 50] : 0/171 drift detected.
+[2023-03-17 13:33:46,047 - INFO - root - stage_01_download_data - 45] : Drift report has been uploaded to GCS
+[2023-03-17 13:33:46,047 - INFO - root - stage_01_download_data - 47] : No data drift detected, terminating the experiment...
+[2023-03-17 13:33:54,179 - INFO - root - stage_02_preprocess_data - 47] : 
+********************
+[2023-03-17 13:33:54,179 - INFO - root - stage_02_preprocess_data - 48] : >>>>> stage "Data Preprocessing" started <<<<<
+[2023-03-17 13:33:54,219 - INFO - root - stage_02_preprocess_data - 30] : Loaded the raw data from data/raw/sensors.csv have the shape (400, 171)
+[2023-03-17 13:33:54,272 - INFO - root - stage_02_preprocess_data - 36] : Training data saved at data/preprocessed/train.csv having the shape (280, 171)
+[2023-03-17 13:33:54,296 - INFO - root - stage_02_preprocess_data - 38] : Test data saved at data/preprocessed/test.csv having the shape (120, 171)
+[2023-03-17 13:33:58,210 - INFO - root - stage_02_preprocess_data - 51] : >>>>> stage "Data Preprocessing" completed!<<<<<
+
+[2023-03-17 13:34:09,577 - INFO - root - stage_03_train_evaluate - 165] : 
+********************
+[2023-03-17 13:34:09,577 - INFO - root - stage_03_train_evaluate - 166] : >>>>> stage "Training and Evaluation" started <<<<<
+[2023-03-17 13:34:10,296 - INFO - root - stage_03_train_evaluate - 78] : train_X shape: (280, 170), test_X shape :(120, 170)
+[2023-03-17 13:34:10,300 - INFO - root - stage_03_train_evaluate - 80] : X_df shape: (400, 170)
+[2023-03-17 13:34:10,553 - INFO - root - stage_03_train_evaluate - 84] : Wrote the data schema to : artifacts/prediction_schema\schema.json
+[2023-03-17 13:34:11,203 - INFO - root - stage_03_train_evaluate - 86] : Uploaded the schema to cloud
+[2023-03-17 13:34:11,207 - INFO - root - stage_03_train_evaluate - 88] : AutoML experiment started...
+[2023-03-17 13:34:40,762 - INFO - root - stage_03_train_evaluate - 112] : Created the prediction pipeline with the best model
+[2023-03-17 13:34:42,443 - INFO - root - stage_03_train_evaluate - 116] : Model training started with experiment name : "automlExp" and run name :"local-20230317133410"
+[2023-03-17 13:34:51,859 - INFO - root - stage_03_train_evaluate - 118] : Model training completed!

@@ -1,0 +1,76 @@
+
+stages:
+  DownloadData:
+    cmd: python src/stage_01_download_data.py --config=configs/config.yaml --params=params.yaml
+    deps:
+    - src/stage_01_download_data.py
+    - configs/config.yaml
+    - params.yaml
+    outs:
+    - data/raw/sensors.csv
+#    - artifacts/reports/data_drift.yaml
+
+  PreprocessData:
+    cmd: python src/stage_02_preprocess_data.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - src/stage_02_preprocess_data.py
+    - params.yaml
+    - configs/config.yaml
+    - data/raw/sensors.csv
+    outs:
+    - data/preprocessed/train.csv
+    - data/preprocessed/test.csv
+
+
+  TrainAndEvalute:
+    cmd: python src/stage_03_train_evaluate.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - src/stage_03_train_evaluate.py
+    - data/preprocessed/train.csv
+    - data/preprocessed/test.csv
+    - params.yaml
+    - configs/config.yaml
+    metrics:
+    - artifacts/reports/scores.json:
+        cache: false
+    - artifacts/reports/params.json:
+        cache: false
+    outs:
+    - artifacts/trained_model/model.joblib
+    - artifacts/prediction_schema/schema.json
+
+  PreProdSetup:
+    cmd: |
+      python src/stage_04_preprod_setup.py
+      pytest tests/test_preblessing.py --junitxml=artifacts/reports/preblessing_tests.xml
+    deps:
+    - src/stage_04_preprod_setup.py
+    - tests/test_preblessing.py
+    - artifacts/trained_model/model.joblib
+    - configs/config.yaml
+    - params.yaml
+    - artifacts/prediction_schema/schema.json
+    outs:
+    - artifacts/reports/preblessing_tests.xml
+
+  ModelBlessing:
+    cmd: python src/stage_05_model_blessing.py  --config=configs/config.yaml --params=params.yaml
+    deps:
+    - src/stage_05_model_blessing.py
+    - artifacts/reports/preblessing_tests.xml
+    - data/preprocessed/test.csv
+    - artifacts/trained_model/model.joblib
+    - configs/config.yaml
+    outs:
+    - artifacts/blessed_model/model.joblib
+
+  Production:
+    cmd: python src/stage_06_production_service.py  --config=configs/config.yaml
+    deps:
+    - src/stage_06_production_service.py
+    - artifacts/blessed_model/model.joblib
+    - data/preprocessed/test.csv
+    - configs/config.yaml
+    outs:
+    - model_serving/production_model/model.joblib
+    - model_serving/data/predictions.csv

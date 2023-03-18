@@ -1,0 +1,65 @@
+# It contains all the configs required in the project
+base:
+  PROJECT : aps-fault-detection
+  SRC: src
+  TARGET_COL: class
+
+artifacts:
+  ARTIFACTS_DIR: artifacts
+  TRAINED_MODEL_DIR: artifacts/trained_model
+  TRAINED_MODEL_FILE_PATH: artifacts/trained_model/model.joblib
+  BLESSED_MODEL_DIR: artifacts/blessed_model
+  BLESSED_MODEL_FILE_PATH: artifacts/blessed_model/model.joblib
+  PREDICTION_SCHEMA_DIR: artifacts/prediction_schema
+  PREDICTION_SCHEMA_FILE_NAME: schema.json
+  PREDICTION_SCHEMA_FILE_PATH: artifacts/prediction_schema/schema.json
+  BASE_LOG_DIR: logs
+  REPORTS_DIR: artifacts/reports
+  MODEL_EVAL_REPORT_PATH: artifacts/reports/scores.json
+  TRAINING_PARAMS_REPORT_PATH: artifacts/reports/params.json
+  PRE_BLESSING_TEST_REPORT_PATH: artifacts/reports/preblessing_tests.xml
+
+
+logs:
+  LOGS_FILE_PATH : logs/running_logs.log
+
+source_download:
+  MONGO_DB_COLLECTION_NAME : car
+
+local_data:
+  DATA_DIR : data
+  RAW_DATA_DIR: data/raw
+  PROCESSED_DATA_DIR: data/raw
+  RAW_DATA_FILE_PATH: data/raw/sensors.csv
+  TRAIN_PATH: data/preprocessed/train.csv
+  TEST_PATH: data/preprocessed/test.csv
+
+mlflow:
+  EXPERIMENT_NAME: automlExp
+  RUN_ID_PREFIX: local #change to online for deploying the code as pipeline
+  MODEL_NAME : FaultDetectionBase
+  LOGGED_MODEL_DIR: logged_model
+
+gs_config:
+  BUCKET_NAME: mlops-378116
+  DATA_DIR : mlops-378116/sensors_fault
+  TRAINED_MODEL_PATH : sensors_fault/artifacts/trained_model/model.joblib
+  BLESSED_MODEL_PATH : sensors_fault/artifacts/blessed_model/model.joblib
+  PREDICTION_SCHEMA_PATH : sensors_fault/artifacts/prediction_schema/schema.json
+  PREBLESSING_REPORT_PATH : sensors_fault/artifacts/reports/preblessing_tests.xml
+  DATA_DRIFT_REPORT_PATH : sensors_fault/artifacts/reports/data_drift.yaml
+  LOGS_FILE_PATH : sensors_fault/logs/running_logs.log
+
+model_serving:
+  PRODUCTION_MODEL_PATH: model_serving/production_model/model.joblib
+  PREDICTION_SCHEMA_FIEL_PATH: schemas/schema.json
+  DATA_DRIFT_REPORT_PATH: artifacts/reports/data_drift.yaml
+
+  LOCAL_INPUTS_FILE_PATH: model_serving/data/inputs.csv
+  LOCAL_PREDICTION_FILE_PATH: model_serving/data/predictions.csv
+
+  S3_BUCKET_NAME: aps-sensors-serving
+  S3_REGION_NAME: us-east-2
+  INPUT_DATA_S3_KEY: sensor_inputs/input_data.csv
+  PREDICTED_DATA_S3_KEY: sensor_predictions/predicted_data.csv
+

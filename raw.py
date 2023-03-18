@@ -1,0 +1,20 @@
+from src.cloud_sync import CloudSync
+from src.alerts import Email
+cloud_sync = CloudSync()
+# cloud_sync.upload_prediction_schema()
+# cloud_sync.upload_logs()
+# cloud_sync.upload_blessed_model()
+# cloud_sync.upload_preblessing_test_report()
+# cloud_sync.upload_trained_model()
+
+# cloud_sync.download_blessed_model()
+# cloud_sync.download_preblessing_test_report()
+# cloud_sync.download_trained_model()
+# cloud_sync.download_prediction_schema()
+# cloud_sync.download_logs()
+#cloud_sync.sync_local_data_dir_to_gcs()
+#cloud_sync.sync_gcs_to_local_data_dir()
+#cloud_sync.sync_gcs_to_local_data_dir()
+cloud_sync.download_input_features()
+#alert = Email()
+#alert.send_sanity_check_alert()
