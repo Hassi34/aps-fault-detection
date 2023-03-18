@@ -6,12 +6,12 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 # Declaring variables for setup functions
 PROJECT_NAME = "src"
-VERSION = "0.0.1"
-AUTHOR = "Hasnain"
+VERSION = "0.0.2"
+AUTHOR = "Hasanain"
 USER_NAME = "hassi34"
 AUTHOR_EMAIL = "hasanain@aicaliber.com"
-REPO_NAME = "wine-quality-dvc"
-DESRCIPTION = "End to End MLOps with Wine Quality Dataset"
+REPO_NAME = "aps-fault-detection"
+DESRCIPTION = "This project contains the production ready Machine Learning solution to make the prediction on the batch of data coming from Air Pressure system (APS) sensors"
 REQUIREMENT_FILE_NAME = "requirements.txt"
 LICENSE = "MIT"
 PYTHON_REQUIRES = ">=3.7"
