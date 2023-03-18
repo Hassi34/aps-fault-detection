@@ -19,7 +19,7 @@
         <img alt="License" src="https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-g.svg">
     </a>
     <a href="https://github.com/Hassi34/aps-fault-detection">
-        <img alt="License" src="https://circleci.com/gh/Hassi34/aps-fault-detection.svg?style=svg&circle-token=ed6b37c74fa493e43f3831db3fdecb628ad73086">
+        <img alt="Build" src="https://circleci.com/gh/Hassi34/aps-fault-detection.svg?style=svg&circle-token=ed6b37c74fa493e43f3831db3fdecb628ad73086">
     </a>
     <a href="https://github.com/Hassi34/aps-fault-detection">
         <img alt="Last Commit" src="https://img.shields.io/github/last-commit/hassi34/aps-fault-detection/main?color=g">
