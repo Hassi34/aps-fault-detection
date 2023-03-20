@@ -113,30 +113,30 @@ workflows:
                 - staging
                 - dev
 
-  Scheduled Sensors CICD:
-    triggers:
-      - schedule:
-          cron: "5 12 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - continuous-integration
+  # Scheduled Sensors CICD:
+  #   triggers:
+  #     - schedule:
+  #         cron: "5 12 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
+  #   jobs:
+  #     - continuous-integration
 
-      - continuous-training-delivery:
-          requires:
-            - continuous-integration
+  #     - continuous-training-delivery:
+  #         requires:
+  #           - continuous-integration
 
-      - sanity-check:
-          type: approval
-          requires:
-          - continuous-training-delivery
+  #     - sanity-check:
+  #         type: approval
+  #         requires:
+  #         - continuous-training-delivery
 
-      - continuous-deployment:
-          requires:
-            - continuous-training-delivery
-            - sanity-check
+  #     - continuous-deployment:
+  #         requires:
+  #           - continuous-training-delivery
+  #           - sanity-check
 
   Serving Pipeline:
     jobs:
@@ -150,18 +150,18 @@ workflows:
               only:
                 - main
 
-  Scheduled Serving Pipeline:
-    triggers:
-      - schedule:
-          cron: "5 1 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - continuous-integration
+  # Scheduled Serving Pipeline:
+  #   triggers:
+  #     - schedule:
+  #         cron: "5 1 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
+  #   jobs:
+  #     - continuous-integration
 
-      - continuous-serving:
-          requires:
-            - continuous-integration
+  #     - continuous-serving:
+  #         requires:
+  #           - continuous-integration
           
